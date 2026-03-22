@@ -183,13 +183,14 @@ export default function App() {
   const tabs = ["dashboard", "plan", "timetable", "resources"];
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: "100vh", color: COLORS.text, fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
+    <div style={{ background: COLORS.bg, minHeight: "100vh", color: COLORS.text, fontFamily: "'DM Sans', 'Segoe UI', sans-serif", width: "100%", margin: 0, padding: 0 }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body, #root { width: 100%; min-height: 100vh; margin: 0; padding: 0; background: ${COLORS.bg}; }
         ::-webkit-scrollbar{width:4px;height:4px}
         ::-webkit-scrollbar-track{background:${COLORS.bg}}
         ::-webkit-scrollbar-thumb{background:${COLORS.border};border-radius:4px}
-        * { box-sizing: border-box; }
         input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
       `}</style>
 
@@ -211,12 +212,11 @@ export default function App() {
         ))}
       </div>
 
-      <div style={{ padding: "28px 20px", maxWidth: 1100, margin: "0 auto" }}>
+      <div style={{ padding: "28px 20px", width: "100%" }}>
 
         {/* ── DASHBOARD ── */}
         {tab === "dashboard" && (
           <div>
-            {/* STAT CARDS */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 12, marginBottom: 28 }}>
               {[
                 { label: "Total Hours", value: totalHours.toFixed(1), color: COLORS.gate, sub: "logged" },
@@ -245,7 +245,6 @@ export default function App() {
                   <input value={hoursInput} onChange={e => setHoursInput(e.target.value)} type="number" min="0" max="12" step="0.5" placeholder="hrs studied" style={{ flex: 1, background: COLORS.surface2, border: `1px solid ${COLORS.border}`, borderRadius: 8, padding: "10px 12px", color: COLORS.text, fontSize: 14, outline: "none" }} onKeyDown={e => e.key === "Enter" && logHours()} />
                   <button onClick={logHours} style={{ background: COLORS.gate, border: "none", borderRadius: 8, padding: "10px 18px", color: "#fff", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>Log</button>
                 </div>
-                {/* WEEK BAR */}
                 <div style={{ marginTop: 18 }}>
                   <div style={{ fontSize: 11, color: COLORS.muted, fontFamily: "'DM Mono',monospace", marginBottom: 8 }}>Last 7 days</div>
                   <div style={{ display: "flex", gap: 4, alignItems: "flex-end", height: 50 }}>
@@ -263,7 +262,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* LEET CODE */}
+              {/* LEETCODE */}
               <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: 22 }}>
                 <div style={{ fontSize: 13, fontFamily: "'Syne',sans-serif", fontWeight: 700, marginBottom: 16 }}>LeetCode Problems</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
@@ -360,7 +359,7 @@ export default function App() {
               const open = expandedPhase === ph.id;
               return (
                 <div key={ph.id} style={{ marginBottom: 16, border: `1px solid ${COLORS.border}`, borderRadius: 16, overflow: "hidden", background: COLORS.surface }}>
-                  <div onClick={() => setExpandedPhase(open ? null : ph.id)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 22px", cursor: "pointer", transition: "background .2s" }}>
+                  <div onClick={() => setExpandedPhase(open ? null : ph.id)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 22px", cursor: "pointer" }}>
                     <div style={{ fontSize: 10, fontFamily: "'DM Mono',monospace", color: COLORS.muted, minWidth: 60 }}>{ph.label}</div>
                     <div style={{ fontSize: 17, fontFamily: "'Syne',sans-serif", fontWeight: 700, flex: 1 }}>{ph.title}</div>
                     <div style={{ fontSize: 11, fontFamily: "'DM Mono',monospace", padding: "4px 12px", borderRadius: 20, background: `rgba(${hexToRgb(ph.color)},0.15)`, color: ph.color }}>{ph.range}</div>
@@ -373,7 +372,7 @@ export default function App() {
                           <div key={h} style={{ padding: "8px 14px", fontSize: 10, fontFamily: "'DM Mono',monospace", letterSpacing: 1, textTransform: "uppercase", borderRight: i < 4 ? `1px solid ${COLORS.border}` : "none", color: [COLORS.muted, COLORS.gate, COLORS.nic, COLORS.placement, COLORS.aptitude][i] }}>{h}</div>
                         ))}
                       </div>
-                      {ph.months.map((m, i) => (
+                      {ph.months.map((m) => (
                         <div key={m.name} style={{ display: "grid", gridTemplateColumns: "100px 1fr 1fr 1fr 1fr", borderTop: `1px solid ${COLORS.border}` }}>
                           <div style={{ padding: "14px 14px", borderRight: `1px solid ${COLORS.border}` }}>
                             <div style={{ fontSize: 13, fontWeight: 600, fontFamily: "'Syne',sans-serif" }}>{m.name}</div>
@@ -390,7 +389,6 @@ export default function App() {
               );
             })}
 
-            {/* SUBJECT PRIORITY TABLE */}
             <div style={{ marginTop: 24, border: `1px solid ${COLORS.border}`, borderRadius: 16, overflow: "hidden", background: COLORS.surface }}>
               <div style={{ padding: "18px 22px", borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontFamily: "'Syne',sans-serif", fontWeight: 700 }}>Subject Priority Matrix</div>
@@ -437,7 +435,7 @@ export default function App() {
           <div>
             <div style={{ fontSize: 22, fontFamily: "'Syne',sans-serif", fontWeight: 800, marginBottom: 4 }}>Weekly Timetable</div>
             <div style={{ fontSize: 12, color: COLORS.muted, fontFamily: "'DM Mono',monospace", marginBottom: 20 }}>// 7–8 AM revision + 5 PM–1 AM study · 9 hrs total daily</div>
-            <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
+            <div style={{ display: "flex", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
               {[["p1", "Phase 1 (Mar–Jun 2026)", "Light · 1–2 hrs/day"], ["p23", "Phase 2–3 (Jul–Dec 2026)", "Full · 8+1 hrs/day"]].map(([id, label, sub]) => (
                 <button key={id} onClick={() => setTtPhase(id)} style={{ padding: "10px 18px", borderRadius: 10, border: `1px solid ${ttPhase === id ? COLORS.gate : COLORS.border}`, background: ttPhase === id ? `rgba(${hexToRgb(COLORS.gate)},0.12)` : COLORS.surface, color: ttPhase === id ? COLORS.gate : COLORS.muted, cursor: "pointer", fontSize: 12, textAlign: "left" }}>
                   <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, marginBottom: 2 }}>{label}</div>
@@ -464,7 +462,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* GOLDEN RULES */}
             <div style={{ marginTop: 24, border: `1px solid ${COLORS.border}`, borderRadius: 16, overflow: "hidden", background: COLORS.surface }}>
               <div style={{ padding: "18px 22px", borderBottom: `1px solid ${COLORS.border}`, fontSize: 16, fontFamily: "'Syne',sans-serif", fontWeight: 700 }}>The Golden Rules</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 1 }}>
@@ -505,7 +502,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* NIC INFO */}
             <div style={{ marginTop: 24, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: 24, background: COLORS.surface }}>
               <div style={{ fontSize: 16, fontFamily: "'Syne',sans-serif", fontWeight: 700, marginBottom: 16, color: COLORS.nic }}>NIC 2026 — Important Update</div>
               <div style={{ fontSize: 13, color: COLORS.muted, lineHeight: 1.7, marginBottom: 12 }}>
